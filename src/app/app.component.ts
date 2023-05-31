@@ -9,26 +9,37 @@ export class AppComponent {
   title = 'myApp';
 }
 
-var consultaCEP = fetch('https://viacep.com.br/ws/01001000/json/')
+var consultaCEP = fetch('https://viacep.com.br/ws/01001250/json/')
 .then(resposta => resposta.json())
-.then( r => console.log(r));
+.then( r => {
+    if (r.erro) {                           // SE (r.erro for TRUE) {eu quero que ele faca alguma cosia...
+      throw Error('Esse CEP não existe!')  // LANCE Error: (Esse CEP não existe!)
+    } else                                 // SE NAO
+  console.log(r)})                        // console.log mostra r
+.catch( erro => console.log(erro));
 
 console.log(consultaCEP)
 
-          //THEN e JSON:
+          // Metodo CATCH - tratando erros (promise reject):
 
-                    // recap atividade anterior:
+                    // recap atividade ./anterior:
                       // SOBRE O OBJETO RESPONSE, para acessa-lo, é necessario usar os MÉTODOS das PROMISES, que vao retornar outras PROMISES, esses metodos sao: THEN, CATCH e FINALLY.
-                    // Quando eu pego (fetch) a API viaCep, a resposta que eu vou receber é um objeto do tipo RESPONSE (seja ele REJECT ou RESOLVE) e para acessar esse objeto eu poço utilizar o método THEN: var consultaCEP = fetch('https://viacep.com.br/ws/01001000/json/').then();
 
-                    // Leio o código como:
+                // No commit anterior vimos que o metodo THEM pega a resposta sendo do objeto response que nao vem traduzido e faz alguma coisa. Mas o THEN só faz isso se a PROMISE for RESOLVE.
 
-                        // consultaCEP pega (fetch) a URL (API). Entao (then) faça o fetch. - E entao, com aquela resposta, ele vai fazer alguma operacao que vou colocar dentro do then(). E a resposta, sendo do objeto do RESPONSE, nao vem da maneira que podemos acessar (a requisicao chega em formato de bytes) sem ser convertido por isso .then(resposta => resposta.json()) para converter esse response em json que "é semelhante ao objeto JS" e dessa forma será possível acessar o response e exibir em tela utilizando novamente o método THEN que complementa minha leitura da linha de código assim:
+                // quando a PROMISE for REJECT usamos o metodo CATCH.
 
-                        // consultaCEP pega (fetch) a URL (API). Entao (then) faça o fetch que é a funcao resposta => converter a resposta em json() ENTAO r (resposta) console.log imprimi r no console.
+                // Caso eu faco um teste com a API https://viacep.com.br/ws/0100100/json/ retirando UM 0 do final do CEP:
 
-                        // expected output:
+                // Expected output:
+                                  // TypeError: load failed
 
-                            //promise {<pending>}
-                            // object: (com os dados de endereco do cep consultado que veio montado na URL da API 'https://viacep.com.br/ws/01001000/json/')
+                // esse erro ocorre pq digitei um CEP no formato inválido, e seguindo os requisitos do ViaCep, quando o formato do CEP for inválido, o response será erro 400 (Bad Request)
+
+                // Reforcando, cada PROMISE retorna o OBJETO RESPONSE que por sua vez retorna pode ser um state RESOLVE (THEN - se resolvido ENTAO faca isso com o fetch) ou REJECT (CATCH - se rejeitado, PEGA o erro e imprima).
+
+                // Como exemplo anterior no commit fatch api e promises, na compra via internet, caso o produto nao chegue no destino final desejado, ele tera o estado de REJECT, mas para eu receber uma mensagem preciso que seja PEGO o motivo do reject e me seja passado um informacao detalhada do erro, e para isso é necessário uma CONDICIONAL.
+
+                // Se com o metodo CATCH a condicional lancando um erro tratado eu fizer um teste com a API https://viacep.com.br/ws/01001250/json/' = CEP invalido, entao o CATCH PEGA o erro que por lógica baterá na condicional erro que por sua vez lancara o erro tratado por mim no console.
+
 
