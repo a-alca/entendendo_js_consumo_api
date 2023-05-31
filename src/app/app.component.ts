@@ -9,36 +9,26 @@ export class AppComponent {
   title = 'myApp';
 }
 
-var consultaCEP = fetch('https://viacep.com.br/ws/01001000/json/');
+var consultaCEP = fetch('https://viacep.com.br/ws/01001000/json/')
+.then(resposta => resposta.json())
+.then( r => console.log(r));
 
 console.log(consultaCEP)
 
-// FETCH API:
+          //THEN e JSON:
 
-            //Expected output:
-                              //Promise
-                                // result: Response { type: "basic", url: "viacep.com.br/ws/01001000/json/", redirect:......}
-                                // status: "resolved"
+                    // recap atividade anterior:
+                      // SOBRE O OBJETO RESPONSE, para acessa-lo, é necessario usar os MÉTODOS das PROMISES, que vao retornar outras PROMISES, esses metodos sao: THEN, CATCH e FINALLY.
+                    // Quando eu pego (fetch) a API viaCep, a resposta que eu vou receber é um objeto do tipo RESPONSE (seja ele REJECT ou RESOLVE) e para acessar esse objeto eu poço utilizar o método THEN: var consultaCEP = fetch('https://viacep.com.br/ws/01001000/json/').then();
 
-            // API - Interface de Programacao de aplicacao e ela permite que doisa componentes de software se comuniquem. Chamamos esses dois lados de cliente e servidor.
+                    // Leio o código como:
 
-            // FETCH - é utilizado para acessar uma api, ex acima, o fetch acessa a API ViaCEP, assim, o metodo fetch é assincrono e sempre retorna uma PROMISE.
+                        // consultaCEP pega (fetch) a URL (API). Entao (then) faça o fetch. - E entao, com aquela resposta, ele vai fazer alguma operacao que vou colocar dentro do then(). E a resposta, sendo do objeto do RESPONSE, nao vem da maneira que podemos acessar (a requisicao chega em formato de bytes) sem ser convertido por isso .then(resposta => resposta.json()) para converter esse response em json que "é semelhante ao objeto JS" e dessa forma será possível acessar o response e exibir em tela utilizando novamente o método THEN que complementa minha leitura da linha de código assim:
 
-            // PROMISE - É uma promessa de que alvo vai acontecer. Como retorno, ela pode ser resolvida ou rejeitada. Isso permite que métodos assincronos se tornem síncronos. Ou seja, ao invés de retornar um valor especifico, o valor final, como ainda nao chegou la, ele retorna uma promessa que esse valor uma hora vai chegar. Digamos que ao efetuar uma compra pela internet, geramos uma promise de que esse pedido será entregue ou ocorrer algum problema que nao chegue ao seu destino final esperado = PROMISE -> RESOLVIDA (RESOLVE) ou -> REJEITADA (REJECT)
+                        // consultaCEP pega (fetch) a URL (API). Entao (then) faça o fetch que é a funcao resposta => converter a resposta em json() ENTAO r (resposta) console.log imprimi r no console.
 
-            // ex
+                        // expected output:
 
-            //const entrega = new Promise ( function
-            //(resolve, reject) {
-            //  if (recebeu == true) {
-            //    resolve('Ana recebeu a encomenda!')
-            //  } else {
-            //    reject ( 'Não foi possível receber aencomenda!')
-            //  }
-            //  })
-
-            // Uma curiosidade dentro dessa antamia da promise: Percebe-se que no codigo comentado acima, estamos enviando uma funcao como parametro para ela e aparecem Callbacks. E é isso que o RESOLVE e REJECT sao, dois CALLBACKs da funcao da promise.
-
-            // SOBRE O OBJETO RESPONSE, para acessa-lo, é necessario usar os MÉTODOS das PROMISES, que vao retornar outras PROMISES, esses metodos sao: THEN, CATCH e FINALLY.
-
+                            //promise {<pending>}
+                            // object: (com os dados de endereco do cep consultado que veio montado na URL da API 'https://viacep.com.br/ws/01001000/json/')
 
