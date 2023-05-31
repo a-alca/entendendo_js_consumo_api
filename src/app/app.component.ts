@@ -9,18 +9,36 @@ export class AppComponent {
   title = 'myApp';
 }
 
-console.log("Messages");
-const sendMsg = () => {
-    console.log("Bran say: Hi, how are you");
-    console.log("Bran say: I`ll send you a invitation!");
-    console.log("Joojen answer: got it!")
-}
+var consultaCEP = fetch('https://viacep.com.br/ws/01001000/json/');
 
-setTimeout(sendMsg, 5000);
-console.log("Bran diz: tks xP")
+console.log(consultaCEP)
 
-// CALLBACK:
-            //Callbacks são, basicamente, funções envidas como parâmetro para outras funçoes.
-            // Como no codigo acima, a funcao assincrona setTimeout recebe a funcao sendMsg e o callback transofmra essa execucao da funcao sendMsg em cinco segundos apos o inicio do codigo.
-            // Entao, aconteceu uma tarefa em segundo plano, que nao interrompeu o andamento das funcoes posteriores dos outros console.log. E isso facilita e agiliza muito o nosso trabalho, por exemplo, com as requisicoes.
-            // Geralmente, callbacks sao executados quando alguma operacao é conluida ou quando um evento espec[ifico ocorre. Callbacks sao assincronos, portanto sao funcoes que sao ativadas por algum fator predeterminado, podendo ser um tempo especifico, a partir de uma acao do usuario, depois da conclusao de alguma coisa.
+// FETCH API:
+
+            //Expected output:
+                              //Promise
+                                // result: Response { type: "basic", url: "viacep.com.br/ws/01001000/json/", redirect:......}
+                                // status: "resolved"
+
+            // API - Interface de Programacao de aplicacao e ela permite que doisa componentes de software se comuniquem. Chamamos esses dois lados de cliente e servidor.
+
+            // FETCH - é utilizado para acessar uma api, ex acima, o fetch acessa a API ViaCEP, assim, o metodo fetch é assincrono e sempre retorna uma PROMISE.
+
+            // PROMISE - É uma promessa de que alvo vai acontecer. Como retorno, ela pode ser resolvida ou rejeitada. Isso permite que métodos assincronos se tornem síncronos. Ou seja, ao invés de retornar um valor especifico, o valor final, como ainda nao chegou la, ele retorna uma promessa que esse valor uma hora vai chegar. Digamos que ao efetuar uma compra pela internet, geramos uma promise de que esse pedido será entregue ou ocorrer algum problema que nao chegue ao seu destino final esperado = PROMISE -> RESOLVIDA (RESOLVE) ou -> REJEITADA (REJECT)
+
+            // ex
+
+            //const entrega = new Promise ( function
+            //(resolve, reject) {
+            //  if (recebeu == true) {
+            //    resolve('Ana recebeu a encomenda!')
+            //  } else {
+            //    reject ( 'Não foi possível receber aencomenda!')
+            //  }
+            //  })
+
+            // Uma curiosidade dentro dessa antamia da promise: Percebe-se que no codigo comentado acima, estamos enviando uma funcao como parametro para ela e aparecem Callbacks. E é isso que o RESOLVE e REJECT sao, dois CALLBACKs da funcao da promise.
+
+            // SOBRE O OBJETO RESPONSE, para acessa-lo, é necessario usar os MÉTODOS das PROMISES, que vao retornar outras PROMISES, esses metodos sao: THEN, CATCH e FINALLY.
+
+
