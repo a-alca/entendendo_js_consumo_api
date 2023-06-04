@@ -9,23 +9,15 @@ export class AppComponent {
   title = 'myApp';
 }
 
-var consultaCEP = fetch('https://viacep.com.br/ws/01001000/json/')
-    .then(resposta => resposta.json())
-    .then( r => {
-        if (r.erro) {                           // SE (r.erro for TRUE) {eu quero que ele faca alguma cosia...
-          throw Error('Esse CEP não existe!')  // LANCE Error: (Esse CEP não existe!)
-        } else                                 // SE NAO
-            console.log(r)
-    })                                        // console.log mostra r
-    .catch( erro => console.log(erro))
-    .finally( mensagem => console.log('mensagem'));
+async function buscaEdereco() { //criando funcao assincrona
 
-console.log(consultaCEP)
+  var consultaCEP = await fetch('https://viacep.com.br/ws/01001000/json/');
+  var consultaCepConvertida = await consultaCEP.json(); // pega o json da api e converte nos dados de endereco do cep
 
-          // Metodo FINALY - tratando erros (promise reject):
+  console.log(consultaCepConvertida) // imprimi object com bairrro; cep; complemento... /...
 
-                    // recap atividade ./anterior:
-                      // SOBRE O OBJETO RESPONSE, para acessa-lo, é necessario usar os MÉTODOS das PROMISES, que vao retornar outras PROMISES, esses metodos sao: THEN, CATCH e FINALLY.
+}
 
+buscaEdereco(); // puxa a funcao e coloca la na callstack
 
-
+                // Nao existe so uma maneira de escrever um codigo assincrono, para evitar o chamado callbackhell (onde haveria vários THEN, como na consulta cep onde eu dou um FETCH na API, THEN resposta.json. THEN trata erro, THEN cada item do objeto) podemos criar uma AWAIT FUNCTION, onde consumimos uma API e tratamos suas RESPONSES.
