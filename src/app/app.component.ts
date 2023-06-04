@@ -12,6 +12,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     async function buscaEdereco(cep) { //criando funcao assincrona
+      var mensagemErro = (<HTMLInputElement>document.getElementById('erro'));
+      mensagemErro.innerHTML = "";
       try {
 
         var consultaCEP = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
@@ -33,6 +35,7 @@ export class AppComponent implements OnInit {
         return consultaCepConvertida;
 
       } catch (erro) {
+        mensagemErro.innerHTML = `<p>CEP inválido.</p>`
         console.log(erro)
       }
     }
@@ -43,6 +46,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-                // PREENCHIMENTO AUTOMATICO DE FORMULARIO
+                // EVITANDO PROBLEMAS
 
-                    // para o preenchimento automatico do formulario, apos a condicional de erro, foram criadas variaveis com mesmo nome dos objects response e pegamos do documento html a id dos seus respectivos campos, entao, cada campo recebe seu valor da consultacepConvertida.
+                    // BONUS: feita tratativa de erro acrescentando uma div com id erro no hmtml e codigo ts para pegar o elemento erro por id e no catch apresentamos mensagem customizda de erro.
