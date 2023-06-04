@@ -19,6 +19,16 @@ export class AppComponent implements OnInit {
         if (consultaCepConvertida.erro) {
           throw Error ('CEP inexistente!')
         }
+        var localidade = (<HTMLInputElement>document.getElementById('cidade'));
+        var logradouro = (<HTMLInputElement>document.getElementById('endereco'));
+        var bairro = (<HTMLInputElement>document.getElementById('bairro'));
+        var uf = (<HTMLInputElement>document.getElementById('estado'));
+
+        localidade.value = consultaCepConvertida.localidade;
+        logradouro.value = consultaCepConvertida.logradouro;
+        uf.value = consultaCepConvertida.uf;
+        bairro.value = consultaCepConvertida.bairro;
+
         console.log(consultaCepConvertida); // imprimi object com bairrro; cep; complemento... /...
         return consultaCepConvertida;
 
@@ -27,30 +37,12 @@ export class AppComponent implements OnInit {
       }
     }
 
-//promise.all
-
-      //let ceps = ['09195350', '010010001'];
-      //let conjuntoCeps = ceps.map(valores => buscaEdereco(valores));
-      //console.log(conjuntoCeps)
-      //Promise.all(conjuntoCeps).then(respostas => console.log(respostas))
-
-//consulta dinamica aula Alura - nao estava conseguindo getElementById
-
-      //var cep = document.getElementById('cep');
-      //cep.addEventListener("focusout", () => buscaEdereco(cep.value))
-
-//consulta dinamica solucionada neste meu estudo
-
     var cep = (<HTMLInputElement>document.getElementById('cep'));
     cep.addEventListener("focusout", () => buscaEdereco(cep.value))
 
     }
   }
 
-                // CONSULTA DINAMICA
+                // PREENCHIMENTO AUTOMATICO DE FORMULARIO
 
-                    //Para a consulta dinamica, consulta o CEP apos digitar e clicar fora do campo CEP, foi construido o codigo comentado na linnha 39/40, criou-se uma variavel cep que recebia o id cep do documento html e pegavamos esse elemendo adicionando um escutador de eventos e ao escutar que clicavamos fora do campo CEP era feita a funcao assincrona buscaEndereco que recebia o valor de cep.
-
-                    //Porem o "problema" é que o typeScript é typesafe, entao o document.getElementByID() retorna o tipo HTMLElement que nao contem a propriedade de value. O subtipo HTMLInputElement tambem nao contem o valor da propriedade.
-
-                    //A solucao para isso é lancar o resultado do getElementByID para o HTMLInputElement criando a variavel cep que recebe o <HTMLInputElement>document.getElementById('cep') e ai sim incrementamos um escutador de eventos no campo cep com o focusout para executar a funcao assincrona busca endereco com o valor de cep.
+                    // para o preenchimento automatico do formulario, apos a condicional de erro, foram criadas variaveis com mesmo nome dos objects response e pegamos do documento html a id dos seus respectivos campos, entao, cada campo recebe seu valor da consultacepConvertida.
