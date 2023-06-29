@@ -50,4 +50,5 @@ Esse módulo propós a introdução ao conhecimento de como consumir e tratar da
   value
   addEventListner
   };
-  
+
+  Tenho backlog de melhoria para o layout 🙃, mas por hora, o projeto pode ser acessado [aqui](https://entendendo-js-consumo-api.vercel.app)
